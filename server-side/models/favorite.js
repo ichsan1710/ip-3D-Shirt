@@ -11,11 +11,23 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
+      Favorite.belongsTo(models.User)
     }
   }
   Favorite.init({
     imgUrl: DataTypes.STRING,
-    UserId: DataTypes.INTEGER
+    UserId: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      validate: {
+        notNull: {
+          msg: "User ID can't be null"
+        },
+        notEmpty: {
+          msg: "User ID can't be empty"
+        }
+      }
+    }
   }, {
     sequelize,
     modelName: 'Favorite',
