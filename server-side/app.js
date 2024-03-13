@@ -1,0 +1,1 @@
+// npx sequelize-cli model:generate --name User --attributes userName:string,email:string,password:string,phoneNumber:integer,address:string
