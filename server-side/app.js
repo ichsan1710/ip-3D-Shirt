@@ -1,1 +1,2 @@
 // npx sequelize-cli model:generate --name User --attributes userName:string,email:string,password:string,phoneNumber:integer,address:string
+// npx sequelize-cli model:generate --name Favorite --attributes imgUrl:string,UserId:integer
