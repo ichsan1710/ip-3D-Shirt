@@ -16,6 +16,9 @@ const errorHandler = (err, req, res, next) => {
         case "InvalidToken":
             res.status(401).json({ message: "Invalid Token" });
             break;
+        case "NotFound":
+            res.status(404).json({ message: "Error not found" });
+            break;
         default:
             console.log(err);
             res.status(500).json({ message: "Internal Server Error" });
