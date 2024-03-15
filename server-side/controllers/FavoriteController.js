@@ -1,11 +1,31 @@
 const { Favorite, User } = require('../models/index.js');
+const cloudinary = require('cloudinary').v2;
+
+cloudinary.config({
+    cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
+    api_key: process.env.CLOUDINARY_API_KEY,
+    api_secret: process.env.CLOUDINARY_API_SECRET,
+    secure: true
+})
 
 class FavoriteController {
     static async addFavorite (req, res, next) {
         try {
             req.body.UserId = req.user.id;
 
-            const favorite = await Favorite.create(req.body);
+            if (!req.file) {
+                throw { name: "FileIsRequired" };
+            }
+
+            const base64Image = req.file.buffer.toString("base64");
+            const base64Url = `data:${req.file.mimetype};base64,${base64Image}`
+
+            const result = await cloudinary.uploader.upload(base64Url, {
+                public_id: req.file.originalname,
+                folder: "ip_3d_shirt"
+            })
+
+            const favorite = await Favorite.create({ imgUrl: result.secure_url });
 
             res.status(201).json(favorite);
         } catch (error) {
