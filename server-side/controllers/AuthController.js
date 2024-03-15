@@ -10,8 +10,6 @@ class AuthController {
             res.status(201).json({
                 userName: user.userName,
                 email: user.email,
-                phoneNumber: user.phoneNumber,
-                address: user.address
             })
         } catch (error) {
             next(error);

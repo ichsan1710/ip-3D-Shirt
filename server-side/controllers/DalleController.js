@@ -1,10 +1,8 @@
-const { Configuration, OpenAIApi } = require('openai');
+const { OpenAI } = require('openai');
 
-const config = new Configuration({
+const openai = new OpenAI({
     apiKey: process.env.OPENAI_API_KEY,
-})
-
-const openai = new OpenAIApi(config);
+});
 
 class DalleController {
     static async createImage (req, res, next) {
