@@ -1,4 +1,4 @@
-const { Favorite } = require('../models/index.js');
+const { Favorite, User } = require('../models/index.js');
 
 class FavoriteController {
     static async addFavorite (req, res, next) {
@@ -13,6 +13,23 @@ class FavoriteController {
         }
     }
 
+    static async getAllFavoritesByUserId (req, res, next) {
+        try {
+            const { id } = req.params;
+
+            const favorite = await Favorite.findAll({
+                include: User,
+                where: {
+                    UserId: id
+                }
+            })
+
+            res.status(200).json(favorite);
+        } catch (error) {
+            next(error);
+        }
+    }
+ 
     static async deleteFavorite (req, res, next) {
         try {
             const { id } = req.params;
@@ -25,7 +42,7 @@ class FavoriteController {
 
             await favorite.destroy();
 
-            res.status(200).json({ message: `successfully remove favorite from my favorites`})
+            res.status(200).json({ message: `successfully remove favorite from my favorites`});
         } catch (error) {
             next(error)
         }
