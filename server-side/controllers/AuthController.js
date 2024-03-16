@@ -38,10 +38,11 @@ class AuthController {
                 throw { name: "InvalidLogin" };
             }
 
+            const { id, userName, email: userEmail } = user
             const payload = { id: user.id };
             const access_token = signToken(payload);
 
-            res.status(200).json({ access_token })
+            res.status(200).json({ access_token, user: { id, userName, email: userEmail } })
 
         } catch (error) {
             next(error)

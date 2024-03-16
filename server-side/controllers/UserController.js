@@ -29,7 +29,7 @@ class UserController {
 
             const editedUser = await user.update(req.body);
 
-            res.status(200).json({message: `User ${editedUser.userName} has been updated`})
+            res.status(200).json(editedUser)
         } catch (error) {
             next(error);
         }

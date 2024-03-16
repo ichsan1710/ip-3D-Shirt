@@ -1,4 +1,4 @@
-const { Favorite, User } = require('../models/index.js');
+const { Favorite } = require('../models/index.js');
 const cloudinary = require('cloudinary').v2;
 
 cloudinary.config({
@@ -25,9 +25,9 @@ class FavoriteController {
                 folder: "ip_3d_shirt"
             })
 
-            const favorite = await Favorite.create({ imgUrl: result.secure_url });
+            await Favorite.create({ imgUrl: result.secure_url, UserId: req.user.id });
 
-            res.status(201).json(favorite);
+            res.status(201).json({ message: "successfully added image to favorites"});
         } catch (error) {
             next(error);
         }
@@ -38,7 +38,6 @@ class FavoriteController {
             const { id } = req.params;
 
             const favorite = await Favorite.findAll({
-                include: User,
                 where: {
                     UserId: id
                 }
@@ -54,7 +53,7 @@ class FavoriteController {
         try {
             const { id } = req.params;
 
-            const favorite = Favorite.findByPk(id);
+            const favorite = await Favorite.findByPk(id);
 
             if (!favorite) {
                 throw { name: "NotFound" };
