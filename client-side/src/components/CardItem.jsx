@@ -99,7 +99,7 @@ function CardItem({ data, handleDelete }) {
             <div className="mx-auto w-full max-w-[550px] bg-white">
               <form onSubmit={handleSubmitForm}>
                 <div className="mb-6 pt-4">
-                  <label className="mb-5 block text-xl font-semibold text-[#07074D]">
+                  <label className="flex items-center justify-center mb-5 text-xl font-semibold text-[#07074D]">
                     Upload File
                   </label>
                   <div className="mb-8">

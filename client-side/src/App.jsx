@@ -3,6 +3,7 @@ import {
   RouterProvider,
   redirect,
 } from "react-router-dom";
+import { Provider } from "react-redux";
 import Customizer from "./pages/Customizer";
 import Canvas from "./canvas";
 import Home from "./pages/Home";
@@ -11,6 +12,7 @@ import Register from "./pages/Register";
 import MainLayout from "./components/MainLayout";
 import User from "./pages/User";
 import Favorite from "./pages/Favorite";
+import store from "./store.js";
 
 const router = createBrowserRouter([
   {
@@ -55,11 +57,13 @@ const router = createBrowserRouter([
 function App() {
   return (
     <>
-      <main className="app transition-all-ease-in">
-        <RouterProvider router={router} />
-        <Canvas />
-        <Customizer />
-      </main>
+      <Provider store={store}>
+        <main className="app transition-all-ease-in">
+          <RouterProvider router={router} />
+          <Canvas />
+          <Customizer />
+        </main>
+      </Provider>
     </>
   );
 }

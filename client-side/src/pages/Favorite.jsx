@@ -1,62 +1,32 @@
-import axios from "axios";
 import { useEffect } from "react";
-import { useState } from "react";
-import { useParams } from "react-router-dom";
-import Swal from "sweetalert2";
+import { useNavigate, useParams } from "react-router-dom";
+
 import CardItem from "../components/CardItem";
+import { useDispatch, useSelector } from "react-redux";
+import { deleteFavoriteById, fetchData } from "../features/favoriteSlice";
 
 function Favorite() {
-  const [data, setData] = useState([]);
+  const dispatch = useDispatch();
+  const favorites = useSelector((state) => state.favorites.list);
+  const navigate = useNavigate();
+
   const { id } = useParams();
 
-  const fetchData = async () => {
-    try {
-      const { data } = await axios({
-        method: "get",
-        url: `http://localhost:3000/my-favorites/${id}`,
-        headers: {
-          Authorization: "Bearer " + localStorage.access_token,
-        },
-      });
-
-      setData(data);
-    } catch (error) {
-      Swal.fire({
-        text: error.response.data.message,
-      });
-    }
-  };
-
   useEffect(() => {
-    fetchData();
+    dispatch(fetchData(id));
   }, []);
 
   const handleDelete = async (id) => {
-    try {
-      await axios({
-        method: "delete",
-        url: `http://localhost:3000/my-favorites/${id}`,
-        headers: {
-          Authorization: "Bearer " + localStorage.access_token,
-        },
-      });
-
-      fetchData();
-
-      Swal.fire({
-        text: "successfully delete favorite",
-        icon: "success",
-      });
-    } catch (error) {
-      Swal.fire({
-        text: error.response.data.message,
-        icon: "error",
-      });
-    }
+    dispatch(deleteFavoriteById(id));
+    navigate("/home");
   };
   return (
     <>
-      <CardItem data={data} handleDelete={handleDelete} key={data.id} />
+      <CardItem
+        data={favorites}
+        handleDelete={handleDelete}
+        key={favorites.id}
+      />
     </>
   );
 }

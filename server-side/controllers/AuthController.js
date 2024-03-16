@@ -62,10 +62,6 @@ class AuthController {
           
             return result;
           }
-          
-
-          const password = generateRandomString(8);
-          console.log(password)
         try {
             const { googleToken } = req.body;
 
