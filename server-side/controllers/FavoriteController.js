@@ -37,6 +37,10 @@ class FavoriteController {
         try {
             const { id } = req.params;
 
+            if (!id) {
+                throw { name: "NotFound" }
+            }
+
             const favorite = await Favorite.findAll({
                 where: {
                     UserId: id

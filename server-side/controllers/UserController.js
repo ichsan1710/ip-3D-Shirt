@@ -5,7 +5,9 @@ class UserController {
         try {
             const { id } = req.params;
 
-            const user = await User.findByPk(id);
+            const user = await User.findByPk(id, {
+                attributes: { exclude: ['password', 'createdAt', 'updatedAt'] }
+            });
 
             if (!user) {
                 throw { name: "NotFound" };

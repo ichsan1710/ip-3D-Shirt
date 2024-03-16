@@ -9,6 +9,10 @@ class DalleController {
         try {
             const { prompt } = req.body;
 
+            if (!prompt) {
+                throw ({ name: "InputPrompt" })
+            }
+
             const response = await openai.images.generate({
                 prompt,
                 n: 1,

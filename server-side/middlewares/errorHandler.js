@@ -22,6 +22,9 @@ const errorHandler = (err, req, res, next) => {
         case "FileIsRequired":
             res.status(400).json({ message: "File is required" });
             break;
+        case "InputPrompt":
+            res.status(400).json({ message: "Please input prompt!" });
+            break;
         default:
             console.log(err);
             res.status(500).json({ message: "Internal Server Error" });
