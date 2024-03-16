@@ -3,10 +3,10 @@ import { easing } from "maath";
 import { useSnapshot } from "valtio";
 import { useFrame } from "@react-three/fiber";
 import { Decal, useGLTF, useTexture } from "@react-three/drei";
-import state from "../store";
+import valtio from "../stores/index.js";
 
 const Shirt = () => {
-  const snap = useSnapshot(state);
+  const snap = useSnapshot(valtio);
   const { nodes, materials } = useGLTF("/shirt_baked.glb");
 
   const logoTexture = useTexture(snap.logoDecal);

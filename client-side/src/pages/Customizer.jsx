@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { useSnapshot } from "valtio";
-import state from "../store";
+import valtio from "../stores/index.js";
 import downloadIcon from "../assets/download.png";
 import { downloadCanvasToImage, reader } from "../config/helpers";
 import { EditorTabs, FilterTabs, DecalTypes } from "../config/constants";
@@ -16,7 +16,7 @@ import {
 import Swal from "sweetalert2";
 
 const Customizer = () => {
-  const snap = useSnapshot(state);
+  const snap = useSnapshot(valtio);
 
   const [file, setFile] = useState("");
 
@@ -30,8 +30,6 @@ const Customizer = () => {
     logoShirt: true,
     stylishShirt: false,
   });
-
-  // const navigate = useNavigate();
 
   const generateTabContent = () => {
     switch (activeEditorTab) {
@@ -91,7 +89,7 @@ const Customizer = () => {
   const handleDecals = (type, result) => {
     const decalType = DecalTypes[type];
 
-    state[decalType.stateProperty] = result;
+    valtio[decalType.stateProperty] = result;
 
     if (!activeFilterTab[decalType.filterTab]) {
       handleActiveFilterTab(decalType.filterTab);
@@ -101,14 +99,14 @@ const Customizer = () => {
   const handleActiveFilterTab = (tabName) => {
     switch (tabName) {
       case "logoShirt":
-        state.isLogoTexture = !activeFilterTab[tabName];
+        valtio.isLogoTexture = !activeFilterTab[tabName];
         break;
       case "stylishShirt":
-        state.isFullTexture = !activeFilterTab[tabName];
+        valtio.isFullTexture = !activeFilterTab[tabName];
         break;
       default:
-        state.isLogoTexture = true;
-        state.isFullTexture = false;
+        valtio.isLogoTexture = true;
+        valtio.isFullTexture = false;
         break;
     }
 
@@ -159,7 +157,7 @@ const Customizer = () => {
             <CustomButton
               type="filled"
               title="Go Back"
-              handleClick={() => (state.intro = true)}
+              handleClick={() => (valtio.intro = true)}
               customStyles="w-fit px-4 py-2.5 font-bold text-sm"
             />
           </motion.div>

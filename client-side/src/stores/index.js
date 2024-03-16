@@ -1,6 +1,6 @@
 import { proxy } from 'valtio'
 
-const state = proxy({
+const valtio = proxy({
     intro: true,
     color: '#171717',
     isLogoTexture: true,
@@ -9,4 +9,4 @@ const state = proxy({
     fullDecal: './threejs.png',
 });
 
-export default state
+export default valtio;

@@ -1,10 +1,10 @@
 import React from "react";
 import { useSnapshot } from "valtio";
 
-import state from "../store";
+import valtio from "../stores/index.js";
 
 const Tab = ({ tab, isFilterTab, isActiveTab, handleClick }) => {
-  const snap = useSnapshot(state);
+  const snap = useSnapshot(valtio);
 
   const activeStyles =
     isFilterTab && isActiveTab
